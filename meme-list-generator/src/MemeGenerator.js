@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 function MemeGenerator() {
-    const [upperText, setUpperText] = useState("");
-    const [lowerText, setLowerText] = useState("");
-    const [allMemes, setAllMemes] = useState("");
+    const [upperText, setUpperText] = useState("")
+    const [lowerText, setLowerText] = useState("")
+    const [allMemes, setAllMemes] = useState("")
     const [randomMeme, setrandomMeme] = useState(
         "http://i.imgflip.com/2fm6x.jpg"
     );
@@ -26,10 +26,10 @@ function MemeGenerator() {
     };
 
     const handleTop = (event) => {
-        setUpperText(event.target.value);
+        setUpperText(event.target.value)
     };
     const handleBottom = (event) => {
-        setLowerText(event.target.value);
+        setLowerText(event.target.value)
     };
     return (
         <div>
