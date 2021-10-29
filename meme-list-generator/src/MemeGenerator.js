@@ -51,7 +51,7 @@ function MemeGenerator() {
                 <button>Generate Meme</button>
             </form>
             <div className="meme">
-                <img src={randomMeme} alt="" />
+                <img src={randomMeme} alt={upperText} />
                 <h2 className="top">{upperText}</h2>
                 <h2 className="bottom">{lowerText}</h2>
             </div>

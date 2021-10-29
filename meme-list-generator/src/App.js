@@ -1,6 +1,7 @@
 import './App.css';
 import MemeGenerator from './MemeGenerator';
-function App() {
+
+const App = () => {
   return (
     <>
       <MemeGenerator />
