@@ -4,7 +4,7 @@ function MemeGenerator() {
     const [upperText, setUpperText] = useState("")
     const [lowerText, setLowerText] = useState("")
     const [allMemes, setAllMemes] = useState("")
-    const [randomMeme, setrandomMeme] = useState(
+    const [randomMeme, setRandomMeme] = useState(
         "http://i.imgflip.com/2fm6x.jpg"
     );
 
@@ -22,7 +22,7 @@ function MemeGenerator() {
     const getRandomMeme = (event) => {
         event.preventDefault()
         const randomNum = Math.floor(Math.random() * Math.floor(allMemes.length));
-        setrandomMeme(allMemes[randomNum].url);
+        setRandomMeme(allMemes[randomNum].url);
     };
 
     const handleTop = (event) => {
@@ -48,7 +48,8 @@ function MemeGenerator() {
                     value={lowerText}
                     onChange={handleBottom}
                 />
-                <button>Click to Generate Meme</button>
+                <button>Next Meme</button>
+                <button>Generate Meme</button>
             </form>
             <div className="meme">
                 <img src={randomMeme} alt="" />
