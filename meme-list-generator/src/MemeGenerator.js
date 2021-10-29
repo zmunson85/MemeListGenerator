@@ -48,7 +48,6 @@ function MemeGenerator() {
                     value={lowerText}
                     onChange={handleBottom}
                 />
-                <button>Next Meme</button>
                 <button>Generate Meme</button>
             </form>
             <div className="meme">
