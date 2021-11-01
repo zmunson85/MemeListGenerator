@@ -65,12 +65,14 @@ function MemeGenerator() {
 
                         ))
                     }
+
+                    <img src={memes[memeIndex].url} alt='meme' />
                     <li className='memeCaptions'>{captions[0]}</li>
                     <li className='memeCaptions'>{captions[1]}</li>
                     <li className='memeCaptions'>{captions[2]}</li>
                     <li className='memeCaptions'>{captions[3]}</li>
                     <li className='memeCaptions'>{captions[4]}</li>
-                    <img src={memes[memeIndex].url} alt='meme' />
+                    <br />
                     <button className='generateNewMeme'>Generate</button>
                     <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
                 </form>
