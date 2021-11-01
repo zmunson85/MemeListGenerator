@@ -72,7 +72,6 @@ function MemeGenerator() {
                     <li className='memeCaptions'>{captions[2]}</li>
                     <li className='memeCaptions'>{captions[3]}</li>
                     <li className='memeCaptions'>{captions[4]}</li>
-                    <h1>Test</h1>
                     <br />
                     <button className='generateNewMeme'>Generate</button>
                     <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
