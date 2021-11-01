@@ -11,7 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+li {
+  list-style: none;
+}
 button {
   cursor: pointer;
   display: block;
@@ -23,6 +25,7 @@ button {
   border: none;
   border-radius: 3px;
 }
+
 img {
   max-width: 500px;
   max-height: 500px;

@@ -14,11 +14,10 @@ function MemeGenerator() {
             array[j] = temp;
         }
     };
-    const generateMeme = () => {
+    const generateMeme = (e) => {
+        e.preventDefault();
         return (
-            <>
-                <h1 style={{ color: 'red' }}>{captions}</h1>
-            </>
+            console.log('Clicked')
         )
     };
 
@@ -33,7 +32,7 @@ function MemeGenerator() {
 
     useEffect(() => {
         if (memes.length) {
-            console.log(memes[memeIndex].box_count.value)
+            console.log(memes[memeIndex].box_count)
             setCaptions(Array(memes[memeIndex].box_count).fill(''));
         }
     }, [memeIndex, memes]);
@@ -43,7 +42,7 @@ function MemeGenerator() {
         setCaptions(
             captions.map((box_count, i) => {
                 if (index === i) {
-                    console.log(text)
+                    console.log(text);
                     return text;
                 } else {
                     console.log(box_count.value)
@@ -53,18 +52,29 @@ function MemeGenerator() {
         );
     };
 
+
     return (
         memes.length ?
             <div className='container'>
-                <button onClick={(generateMeme)} className='generateNewMeme'>Generate</button>
-                <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
-                {
-                    captions.map((c, index) => (
-                        <input onChange={(e) => updateCaption(e, index)} key={index} />
-                    ))
-                }
 
-                <img src={memes[memeIndex].url} alt={{ captions }} />
+
+                <form onSubmit={generateMeme}>
+                    {
+                        captions.map((c, index) => (
+                            <input onChange={(e) => updateCaption(e, index)} key={index} />
+
+                        ))
+                    }
+                    <li className='memeCaptions'>{captions[0]}</li>
+                    <li className='memeCaptions'>{captions[1]}</li>
+                    <li className='memeCaptions'>{captions[2]}</li>
+                    <li className='memeCaptions'>{captions[3]}</li>
+                    <li className='memeCaptions'>{captions[4]}</li>
+                    <img src={memes[memeIndex].url} alt='meme' />
+                    <button className='generateNewMeme'>Generate</button>
+                    <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
+                </form>
+
 
             </div> : <></>
     )
