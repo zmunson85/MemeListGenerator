@@ -77,16 +77,17 @@ function MemeGenerator() {
                         ))
                     }
                     <img src={memes[memeIndex].url} alt='meme' />
-                    {captions.map((inputText, caption) => {
+                    {/* {captions.map((inputText, caption) => {
                         console.log(inputText)
-                        return <h1 key={caption}>{inputText}</h1>
-                    })}
+                        return <h1 className='caption' key={caption}>{inputText}</h1>
+                    })} */}
                     <button className='generateButton'>Generate</button>
                     <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
                 </form>
                 {generatedMemes.length ?
                     <div className='previewMeme'>
-                        <img src={generatedMemes} alt='test' />
+                        <img src={generatedMemes} alt={generatedMemes} />
+                        <p><a href={generatedMemes}>{generatedMemes}</a></p>
                     </div>
                     : null
                 }
