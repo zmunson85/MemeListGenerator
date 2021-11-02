@@ -3,49 +3,61 @@ import React, { useState, useEffect } from "react";
 
 function MemeGenerator() {
     const [memes, setMemes] = useState([])
+    const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
     const [captions, setCaptions] = useState([]);
 
-    const randomMeme = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * i);
-            const temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-    };
     const generateMeme = (e) => {
         e.preventDefault();
-        return (
-            console.log('Clicked')
-        )
+        const currentMeme = memes[memeIndex];
+        const formData = new FormData();
+
+        formData.append('username', 'VschoolTesting');
+        formData.append('password', 'Testing1');
+        formData.append('template_id', currentMeme.id);
+        captions.map((c, index) => formData.append(`boxes[${index}][text]`, c));
+        console.log(generatedMemes)
+
+        fetch('https://api.imgflip.com/caption_image', {
+            method: 'POST',
+            body: formData
+        }).then(res => {
+            res.json().then(res => {
+                setGeneratedMemes(res.data.url);
+                console.log(res.data.url)
+                return generatedMemes
+            });
+        });
     };
 
 
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes").then(res => res.json()).then(res => {
             const memes = res.data.memes;
-            randomMeme(memes);
+            for (let i = memes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * i);
+                const temp = memes[i];
+                memes[i] = memes[j];
+                memes[j] = temp;
+            }
             setMemes(memes);
-        })
+        });
     }, []);
 
     useEffect(() => {
         if (memes.length) {
-            console.log(memes[memeIndex].box_count)
             setCaptions(Array(memes[memeIndex].box_count).fill(''));
         }
     }, [memeIndex, memes]);
+
 
     const updateCaption = (e, index) => {
         const text = e.target.value || '';
         setCaptions(
             captions.map((box_count, i) => {
                 if (index === i) {
-                    console.log(text);
                     return text;
                 } else {
-                    console.log(box_count.value)
                     return box_count;
                 }
             })
@@ -61,24 +73,25 @@ function MemeGenerator() {
                 <form onSubmit={generateMeme}>
                     {
                         captions.map((c, index) => (
-                            <input onChange={(e) => updateCaption(e, index)} key={index} />
-
+                            <input onChange={(e) => updateCaption(e, index)} key={index} required />
                         ))
                     }
-
                     <img src={memes[memeIndex].url} alt='meme' />
-                    <li className='memeCaptions'>{captions[0]}</li>
-                    <li className='memeCaptions'>{captions[1]}</li>
-                    <li className='memeCaptions'>{captions[2]}</li>
-                    <li className='memeCaptions'>{captions[3]}</li>
-                    <li className='memeCaptions'>{captions[4]}</li>
-                    <br />
-                    <button className='generateNewMeme'>Generate</button>
+                    {captions.map((inputText, caption) => {
+                        console.log(inputText)
+                        return <h1 key={caption}>{inputText}</h1>
+                    })}
+                    <button className='generateButton'>Generate</button>
                     <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
                 </form>
-
-
-            </div> : <> test</>
+                {generatedMemes.length ?
+                    <div className='previewMeme'>
+                        <img src={generatedMemes} alt='test' />
+                    </div>
+                    : null
+                }
+                {console.log(generatedMemes)}
+            </div> : <> </>
     )
 }
 
