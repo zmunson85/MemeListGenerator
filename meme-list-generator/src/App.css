@@ -1,12 +1,10 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Dekko', cursive;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -25,7 +23,6 @@ button {
   border: none;
   border-radius: 3px;
 }
-
 img {
   max-width: 500px;
   max-height: 500px;
@@ -33,6 +30,18 @@ img {
   margin-top: 50px;
   display: block;
   box-shadow: 0px 0px 10px black;
+}
+.memeCaptions {
+  max-width: 500px;
+  max-height: 500px;
+  margin: auto;
+  font-family: 'Dekko', cursive;
+
+  /* margin-top: 50px; */
+}
+.previewMeme {
+  text-align: center;
+  font-size: 30px;
 }
 input {
   box-sizing: border-box;
@@ -42,14 +51,37 @@ input {
   margin: auto;
   margin-bottom: 15px;
 }
-h1 {
+h2 {
   text-align: center;
   font-size: 50px;
   text-shadow: 0px 0px 5px black;
 }
 .skipButton {
-  background-color: orange;
+  background-color:#EE5622;
+  color: #31263E;
 }
 .generateButton {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color:#31263E;
+  color: #ECA72C;
 }
+.header{ 
+  margin-bottom: 15px;
+  width: 100%;
+  height: 100px;;
+  background: #a8c0ff;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #3f2b96, #a8c0ff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #3f2b96, #a8c0ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+h1{
+  font-family: 'Merriweather', serif;
+  font-size: 40px;
+  text-align: center;
+  display: inline-block;
+  margin-left: 38%;
+margin-top: 2%;
+
+}
+
