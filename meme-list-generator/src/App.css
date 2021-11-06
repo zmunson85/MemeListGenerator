@@ -61,6 +61,7 @@ h2 {
   color: #31263e;
 }
 .generateButton {
+  margin-top: 20px;
   background-color: #31263e;
   color: #eca72c;
 }
@@ -88,4 +89,19 @@ h1 {
   display: inline-block;
   margin-left: 38%;
   margin-top: 2%;
+}
+.meme {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.topText {
+  position: absolute;
+  top: 100px;
+  left: 500px;
+}
+.bottomText {
+  position: absolute;
+  top: 200px;
+  left: 500px;
 }

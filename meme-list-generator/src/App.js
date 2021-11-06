@@ -1,12 +1,11 @@
 import './App.css';
-import MemeGenerator from './MemeGenerator';
-// import List from './List'
-//maintain state here and pass the array to list , handle submit to meme generator
+import Main from './Main';
+// import MemeGenerator from './MemeGenerator';
+
 const App = () => {
   return (
     <>
-      <MemeGenerator />
-
+      <Main />
     </>
   );
 }
