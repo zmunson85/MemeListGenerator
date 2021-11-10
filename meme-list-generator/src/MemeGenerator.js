@@ -13,18 +13,6 @@ function MemeGenerator() {
 
     }]);
 
-<<<<<<< HEAD
-    const randomMeme = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * i);
-            const temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-    };
-
-=======
->>>>>>> main
 
     const generateMeme = (e) => {
         e.preventDefault();
@@ -53,11 +41,6 @@ function MemeGenerator() {
     };
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes").then(res => res.json()).then(res => {
-<<<<<<< HEAD
-            const memes = res.data.memes.box_count;
-            console.log(memes)
-            randomMeme(memes);
-=======
             const memes = res.data.memes;
             for (let i = memes.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * i);
@@ -65,15 +48,11 @@ function MemeGenerator() {
                 memes[i] = memes[j];
                 memes[j] = temp;
             }
->>>>>>> main
             setMemes(memes);
         });
     }, []);
     useEffect(() => {
         if (memes.length) {
-<<<<<<< HEAD
-            console.log(memes[memeIndex].box_count)
-=======
             setCaptions(Array(memes[memeIndex].box_count).fill(''));
             console.log(memeIndex)
         }
@@ -127,4 +106,3 @@ function MemeGenerator() {
     )
 }
 export default MemeGenerator;
->>>>>>> main
