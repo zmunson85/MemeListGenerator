@@ -5,6 +5,13 @@ function MemeGenerator() {
     const [generatedMemes, setGeneratedMemes] = useState([{ data: '' }])
     const [memeIndex, setMemeIndex] = useState(0);
     const [captions, setCaptions] = useState([]);
+    const [generatedMeme, setGeneratedMeme] = useState([{
+        box_count: 0,
+        topText: '',
+        bottomText: '',
+        url: ''
+
+    }]);
 
 
     const generateMeme = (e) => {
