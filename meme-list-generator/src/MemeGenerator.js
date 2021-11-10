@@ -5,12 +5,24 @@ function MemeGenerator() {
     const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
     const [captions, setCaptions] = useState([]);
+<<<<<<< HEAD
     // const [generatedMeme, setGeneratedMeme] = useState([{
     //     box_count: 0,
     //     topText: '',
     //     bottomText: '',
     //     url: ''
     // }]);
+=======
+    const [generatedMeme, setGeneratedMeme] = useState([{
+        box_count: 0,
+        topText: '',
+        bottomText: '',
+        url: ''
+
+    }]);
+
+
+>>>>>>> d69f1a753d795d23ae267b897e7ed6cfef85bf4d
     const generateMeme = (e) => {
         e.preventDefault();
         const currentMeme = memes[memeIndex];
