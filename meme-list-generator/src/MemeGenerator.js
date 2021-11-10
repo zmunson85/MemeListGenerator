@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import Meme from './Meme';
 function MemeGenerator() {
     const [memes, setMemes] = useState([])
-    const [generatedMemes, setGeneratedMemes] = useState([{ data: '' }])
+    const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
     const [captions, setCaptions] = useState([]);
-
-
+    // const [generatedMeme, setGeneratedMeme] = useState([{
+    //     box_count: 0,
+    //     topText: '',
+    //     bottomText: '',
+    //     url: ''
+    // }]);
     const generateMeme = (e) => {
         e.preventDefault();
         const currentMeme = memes[memeIndex];
@@ -23,14 +27,12 @@ function MemeGenerator() {
             .then(res => {
                 res.json().then(res => {
                     setGeneratedMemes(prevGeneratedMemes => ([...prevGeneratedMemes,
-                    { data: res.data }]));
-                    console.log(res.data.url)
+                    res.data]));
+                    console.log(res.data)
                     // return generatedMemes
                 });
             });
-
         console.log(generatedMemes)
-
     };
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes").then(res => res.json()).then(res => {
@@ -64,34 +66,28 @@ function MemeGenerator() {
     };
     console.log(generatedMemes)
     const mappedMemes = generatedMemes.map(meme =>
-
-        <Meme url={meme.data.url} />
-
+        <Meme url={meme?.url} />
     )
-
     return (
         memes.length ?
             <div className='container'>
                 <form onSubmit={generateMeme}>
+                    <button className='generateButton'>Generate</button>
+                    <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
                     {
                         captions.map((c, index) => (
                             <input onChange={(e) => updateCaption(e, index)} key={index} required />
                         ))
-
                     }
                     <img src={memes[memeIndex].url} alt='meme' />
 
-                    <button className='generateButton'>Generate</button>
-                    <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
                 </form>
-
                 <div className='previewMeme'>
                     <h1>Meme Preview</h1>
                     {
                         mappedMemes
                     }
                 </div>
-
             </div> :
             <>
                 <h2>Memes Will be shown here!</h2>
