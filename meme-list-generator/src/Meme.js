@@ -6,12 +6,12 @@ function Meme(props) {
         //get same image as well as the form to match box_count
         //manage own version of caption state, need to target the specific image 
         <>
-            <h2 style={{ textAlign: 'center', color: 'Black' }}>User Generated Memes</h2>
+
             <div>
                 <img src={props.url} alt='oops Its Broken' />
                 <button style={{ marginTop: '10px', backgroundColor: 'orange' }}>UPDATE THIS MEME</button>
                 {/* filter for delete */}
-                <button onClick={() => props.handleDelete(props.memeId)} style={{ backgroundColor: 'red' }}>DELETE THIS MEME</button>
+                <button onClick={() => props.handleDelete(props.rId)} style={{ backgroundColor: 'red' }}>DELETE THIS MEME</button>
             </div>
         </>
         : null

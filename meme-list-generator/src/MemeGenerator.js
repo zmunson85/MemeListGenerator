@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Meme from './Meme';
-function MemeGenerator() {
+
+const MemeGenerator = () => {
     const [memes, setMemes] = useState([])
     const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
     const [captions, setCaptions] = useState([]);
 
-    //define the variables needed
-    //set state
     const deleteMeme = (id) => {
         setGeneratedMemes(
-            prevGeneratedMemes => prevGeneratedMemes.filter((meme => meme.memeId !== id))
+            prevGeneratedMemes => prevGeneratedMemes.filter((meme => meme.page_url !== id))
         )
     }
     const editMeme = (id) => {
@@ -18,14 +17,6 @@ function MemeGenerator() {
             prevGeneratedMemes => prevGeneratedMemes.updateCaption()
         )
     }
-    // const [generatedMeme, setGeneratedMeme] = useState([{
-    //     box_count: 0,
-    //     topText: '',
-    //     bottomText: '',
-    //     url: ''
-
-    // }]);
-
 
     const generateMeme = (e) => {
         e.preventDefault();
@@ -43,7 +34,7 @@ function MemeGenerator() {
             .then(res => {
                 res.json().then(res => {
                     setGeneratedMemes(prevGeneratedMemes => ([...prevGeneratedMemes,
-                    { ...res.data, memeId: currentMeme.id }]));
+                    { ...res.data, key: randomId, memeId: currentMeme.id }]));
                     console.log(randomId)
                     console.log(currentMeme.id)
                     // return generatedMemes
@@ -82,7 +73,7 @@ function MemeGenerator() {
         );
     };
     const mappedMemes = generatedMemes.map((meme, index) =>
-        <Meme key={meme?.url} memeId={meme?.memeId} id={index} url={meme?.url} handleEdit={editMeme} handleDelete={deleteMeme} />
+        <Meme key={meme.url} rId={meme.page_url} memeId={meme?.memeId} id={index} url={meme?.url} handleEdit={editMeme} handleDelete={deleteMeme} />
     )
     return (
         memes.length ?
@@ -100,6 +91,7 @@ function MemeGenerator() {
 
                 </form>
                 <div className='previewMeme'>
+                    <h2 style={{ textAlign: 'center', color: 'Black' }}>User Generated Memes</h2>
                     {
                         mappedMemes
                     }
