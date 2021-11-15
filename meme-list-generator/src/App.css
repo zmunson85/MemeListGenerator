@@ -1,11 +1,9 @@
 * {
-  background-color: rgb(36, 120, 146);
+  background-color: #003049;
 }
-
 body {
   margin: 0;
   font-family: "Dekko", cursive;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,14 +16,8 @@ li {
 }
 button {
   cursor: pointer;
-  display: block;
-  width: 350px;
-  padding: 10px;
-  margin: auto;
-  margin-bottom: 15px;
-  color: white;
+  width: 25%;
   border: none;
-  border-radius: 3px;
 }
 img {
   max-width: 500px;
@@ -33,14 +25,13 @@ img {
   margin: auto;
   margin-top: 50px;
   display: block;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 10px #669bbc;
 }
 .memeCaptions {
   max-width: 500px;
   max-height: 500px;
   margin: auto;
   font-family: "Dekko", cursive;
-
   /* margin-top: 50px; */
 }
 .previewMeme {
@@ -58,17 +49,19 @@ input {
 h2 {
   text-align: center;
   font-size: 50px;
-  text-shadow: 0px 0px 5px black;
+  text-shadow: 0px 0px 5px #669bbc;
 }
 .skipButton {
-  margin-top: 20px;
-  background-color: #90849e;
-  color: #eca72c;
+  margin: auto;
+  background-color: #669bbc;
+  color: #fdf0d5;
+  border-radius: 3px;
 }
 .generateButton {
-  margin-top: 20px;
-  background-color: #849e88;
-  color: #eca72c;
+  margin: auto;
+  background-color: #c1121f;
+  color: #fdf0d5;
+  border-radius: 3px;
 }
 .header {
   margin-bottom: 15px;
@@ -86,7 +79,6 @@ h2 {
     #a8c0ff
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-
 h1 {
   font-family: "Merriweather", serif;
   font-size: 40px;
@@ -100,7 +92,6 @@ h1 {
   text-align: center;
   color: white;
 }
-
 .container {
   position: relative;
   text-align: center;
@@ -117,10 +108,33 @@ h1 {
 }
 .bottomText {
   font-size: large;
-  color: wheat;
+  color: #fdf0d5;
   box-shadow: #eca72c;
   position: absolute;
   top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+input {
+  background-color: #fdf0d5;
+}
+.text-center,
+button {
+  margin-top: 10px;
+  margin: 1%;
+  border-radius: 3px;
+}
+
+/* .editButton {
+  margin: auto;
+  border-radius: 3px;
+  background-color: #fdf0d5;
+  color: #fdf0d5;
+}
+
+.deleteButton {
+  border-radius: 3px;
+  background-color: #c1121f;
+  color: #fdf0d5;
+} */

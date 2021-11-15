@@ -1,59 +1,59 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Fruit from './Fruit';
 
 function App(props) {
 
     const [fruits, setFruits] = useState([{
-        title: "Kiwi", 
+        title: "Kiwi",
         color: "Green"
     }])
 
     const [fruit, setFruit] = useState({
-        title: "", 
+        title: "",
         color: ""
     })
 
 
-    const editFruit = (id, updatedFruitItem) => { 
-        setFruits(prevFruits => { 
-            let newFruits = prevFruits.map((fruit, index) => { 
-                if (id === index) 
+    const editFruit = (id, updatedFruitItem) => {
+        setFruits(prevFruits => {
+            let newFruits = prevFruits.map((fruit, index) => {
+                if (id === index)
                     return updatedFruitItem
-                else 
+                else
                     return fruit
             })
             return [...newFruits]
         })
     }
 
-    const deleteFruit = (id) => { 
+    const deleteFruit = (id) => {
         // slice 
 
         // find => return the found item 
 
         // filter =>
-        setFruits(prevFruits => { 
-            let newFruits = prevFruits.filter((fruit, index) => { 
-                if(id !== index) return fruit
+        setFruits(prevFruits => {
+            let newFruits = prevFruits.filter((fruit, index) => {
+                if (id !== index) return fruit
             })
             // let newFruits = prevFruits.filter((fruit, index) => id !== index )
             return [...newFruits]
         })
     }
 
-    const handleChange = (e) => { 
-        const {name, value} = e.target
+    const handleChange = (e) => {
+        const { name, value } = e.target
         setFruit(prevFruit => ({
-            ...prevFruit, 
+            ...prevFruit,
             [name]: value
         }))
     }
 
-    const handleSubmit = (e) => { 
-        e.preventDefault() 
-        setFruits(prevFruits => [...prevFruits, {title: fruit.title, color: fruit.color}])
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setFruits(prevFruits => [...prevFruits, { title: fruit.title, color: fruit.color }])
         setFruit({
-            title: "", 
+            title: "",
             color: ""
         })
     }
@@ -64,23 +64,23 @@ function App(props) {
             <form onSubmit={handleSubmit}>
                 <input
                     name="title"
-                    onChange={handleChange} 
+                    onChange={handleChange}
                     value={fruit.title}
                 />
                 <input
                     name="color"
-                    onChange={handleChange} 
+                    onChange={handleChange}
                     value={fruit.color}
                 />
                 <button type="submit">Add New Fruit</button>
             </form>
 
             <h2>My List of Fruit: </h2>
-            { fruits.map((fruit, index) => <Fruit 
-                key={fruit+index} 
-                fruit={fruit} 
+            {fruits.map((fruit, index) => <Fruit
+                key={fruit + index}
+                fruit={fruit}
                 id={index}
-                delete={deleteFruit} 
+                delete={deleteFruit}
                 edit={editFruit}
             />)}
         </div>
@@ -88,3 +88,4 @@ function App(props) {
 }
 
 export default App;
+
