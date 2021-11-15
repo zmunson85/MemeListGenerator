@@ -34,6 +34,35 @@ const MemeGenerator = () => {
         )
     }
 
+    // id => id of picture/image
+    // memeId => template Id of the template from the api 
+    const editMeme = (id, memeId) => {
+        const currentMeme = memes[memeIndex];
+        const editData = new FormData();
+        editData.append('username', 'VschoolTesting');
+        editData.append('password', 'Testing1');
+        editData.append('template_id', memeId);
+        captions.forEach((c, index) => editData.append(`boxes[${index}][text]`, c));
+        console.log(captions)
+        fetch('https://api.imgflip.com/caption_image', {
+            method: 'POST',
+            body: editData
+        })
+            .then(res => {
+                res.json().then(res => {
+                    // console.log(res, 'coming from edit meme')
+                    console.log(res.data, 'res.data: coming from edit meme')
+                    setGeneratedMemes(
+                        prevGeneratedMemes => prevGeneratedMemes.map(meme => meme.page_url === id ? { ...res.data, memeId: currentMeme.id, captions } : meme)
+                    )
+                });
+                // setGeneratedMemes(
+                //     prevGeneratedMemes => prevGeneratedMemes.map((meme => meme.page_url === id ? edits : meme { ...res.data, memeId: currentMeme.id, captions }))
+                // )
+                setCaptions(Array(memes[memeIndex].box_count).fill(''));
+            });
+    }
+
     const generateMeme = (e) => {
         e.preventDefault();
         const randomId = Math.floor(Math.random() * 100) + 1
@@ -41,8 +70,8 @@ const MemeGenerator = () => {
         const formData = new FormData();
         formData.append('username', 'VschoolTesting');
         formData.append('password', 'Testing1');
-        formData.append('template_id', currentMeme.id);
-        captions.map((c, index) => formData.append(`boxes[${index}][text]`, c));
+        formData.append('template_id', currentMeme.id); // 
+        captions.forEach((c, index) => formData.append(`boxes[${index}][text]`, c));
         console.log(captions)
         fetch('https://api.imgflip.com/caption_image', {
             method: 'POST',
@@ -51,39 +80,56 @@ const MemeGenerator = () => {
             .then(res => {
                 res.json().then(res => {
                     setGeneratedMemes(prevGeneratedMemes => ([...prevGeneratedMemes,
-                    { ...res.data, key: randomId, memeId: currentMeme.id }]));
+                    { ...res.data, key: randomId, memeId: currentMeme.id, captions }]));
                 });
             });
         setCaptions(Array(memes[memeIndex].box_count).fill(''));
         console.log(captions)
     };
 
-    // const editMeme = () => {
-
-    // }
-
-
-
     useEffect(() => {
+        console.log("this useeffect was called")
         if (memes.length) {
             setCaptions(Array(memes[memeIndex].box_count).fill(''));
         }
     }, [memeIndex, memes]);
+
     const updateCaption = (e, index) => {
+        console.log("Current value: ", e.target.value)
         const text = e.target.value || '';
-        setCaptions(
-            captions.map((box_count, i) => {
-                if (index === i) {
-                    return text;
-                } else {
-                    return box_count;
-                }
+        const { value } = e.target
+        // setCaptions(
+        //     captions.map((box_count, i) => {
+        //         if (index === i) {
+        //             return text;
+        //         } else {
+        //             return box_count;
+        //         }
+        //     })
+        // );
+
+        setCaptions(prevCaptions => {
+            return prevCaptions.map((text, i) => {
+                if (index === i)
+                    return value
+                else
+                    return text
             })
-        );
+        })
+        // console.log(captions)
     };
-    console.log(captions)
     const UserMemes = generatedMemes.map((meme, index) =>
-        <Meme key={meme.url} rId={meme.page_url} memeId={meme?.memeId} id={index} url={meme?.url} handleDelete={deleteMeme} text={meme.captions} />
+        <Meme
+            key={meme.url}
+            rId={meme.page_url}
+            memeId={meme?.memeId}
+            id={index}
+            url={meme?.url}
+            handleDelete={deleteMeme}
+            handleEdit={editMeme}
+            text={meme.captions}
+            updateCaption={updateCaption}
+        />
     )
     return (
         memes.length ?
