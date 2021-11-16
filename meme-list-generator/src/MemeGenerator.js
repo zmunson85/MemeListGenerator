@@ -3,15 +3,11 @@ import Meme from './Meme';
 import './App.css'
 import { Card } from 'react-bootstrap';
 // import EditMeme from "./EditMeme";
-
 const MemeGenerator = () => {
     const [memes, setMemes] = useState([])
     const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
-    const [captions, setCaptions] = useState([]);
-
-
-
+    const [captions, setCaptions] = useState([]); // for adding a new caption 
     //Grab All Memes, display Random meme on start, set to an array
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes").then(res => res.json()).then(res => {
@@ -25,25 +21,21 @@ const MemeGenerator = () => {
             setMemes(memes);
         });
     }, []);
-
-
-
     const deleteMeme = (id) => {
         setGeneratedMemes(
             prevGeneratedMemes => prevGeneratedMemes.filter((meme => meme.page_url !== id))
         )
     }
-
     // id => id of picture/image
     // memeId => template Id of the template from the api 
-    const editMeme = (id, memeId) => {
-        const currentMeme = memes[memeIndex];
+    const editMeme = (id, memeId, captionsArr) => {
+        // const currentMeme = memes[memeIndex];
         const editData = new FormData();
         editData.append('username', 'VschoolTesting');
         editData.append('password', 'Testing1');
         editData.append('template_id', memeId);
-        captions.forEach((c, index) => editData.append(`boxes[${index}][text]`, c));
-        console.log(captions)
+        captionsArr.forEach((c, index) => editData.append(`boxes[${index}][text]`, c));
+        // console.log(captions)
         fetch('https://api.imgflip.com/caption_image', {
             method: 'POST',
             body: editData
@@ -53,7 +45,20 @@ const MemeGenerator = () => {
                     // console.log(res, 'coming from edit meme')
                     console.log(res.data, 'res.data: coming from edit meme')
                     setGeneratedMemes(
-                        prevGeneratedMemes => prevGeneratedMemes.map(meme => meme.page_url === id ? { ...res.data, memeId: currentMeme.id, captions } : meme)
+                        prevGeneratedMemes => prevGeneratedMemes.map((meme, index) => {
+                            console.log("current meme in map: ", meme)
+                            if (index === id) {
+
+                                console.log("hey this needs to be replaced")
+                                console.log(res.data)
+                                return { ...res.data, memeId: memeId, captions, box_count: meme.box_count }
+                            }
+                            else {
+                                console.log("else statemeent~!!")
+                                return meme
+                            }
+                            // return meme.id === id ? { ...res.data, memeId: memeId, captions, box_count: meme.box_count } : meme
+                        })
                     )
                 });
                 // setGeneratedMemes(
@@ -62,11 +67,11 @@ const MemeGenerator = () => {
                 setCaptions(Array(memes[memeIndex].box_count).fill(''));
             });
     }
-
     const generateMeme = (e) => {
         e.preventDefault();
         const randomId = Math.floor(Math.random() * 100) + 1
         const currentMeme = memes[memeIndex];
+        console.log(currentMeme)
         const formData = new FormData();
         formData.append('username', 'VschoolTesting');
         formData.append('password', 'Testing1');
@@ -80,20 +85,18 @@ const MemeGenerator = () => {
             .then(res => {
                 res.json().then(res => {
                     setGeneratedMemes(prevGeneratedMemes => ([...prevGeneratedMemes,
-                    { ...res.data, key: randomId, memeId: currentMeme.id, captions }]));
+                    { ...res.data, key: randomId, memeId: currentMeme.id, captions, box_count: currentMeme.box_count }]));
                 });
             });
         setCaptions(Array(memes[memeIndex].box_count).fill(''));
         console.log(captions)
     };
-
     useEffect(() => {
         console.log("this useeffect was called")
         if (memes.length) {
             setCaptions(Array(memes[memeIndex].box_count).fill(''));
         }
     }, [memeIndex, memes]);
-
     const updateCaption = (e, index) => {
         console.log("Current value: ", e.target.value)
         const text = e.target.value || '';
@@ -107,7 +110,6 @@ const MemeGenerator = () => {
         //         }
         //     })
         // );
-
         setCaptions(prevCaptions => {
             return prevCaptions.map((text, i) => {
                 if (index === i)
@@ -120,7 +122,7 @@ const MemeGenerator = () => {
     };
     const UserMemes = generatedMemes.map((meme, index) =>
         <Meme
-            key={meme.url}
+            key={meme.url + meme}
             rId={meme.page_url}
             memeId={meme?.memeId}
             id={index}
@@ -129,6 +131,7 @@ const MemeGenerator = () => {
             handleEdit={editMeme}
             text={meme.captions}
             updateCaption={updateCaption}
+            boxCount={meme.box_count}
         />
     )
     return (
@@ -146,7 +149,6 @@ const MemeGenerator = () => {
                             ))
                         }
                         <button className='generateButton'>Generate</button>
-
                     </form>
                 </Card>
                 <Card>
