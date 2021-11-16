@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Meme from './Meme';
 import './App.css'
 import { Card } from 'react-bootstrap';
-// import EditMeme from "./EditMeme";
+
 const MemeGenerator = () => {
     const [memes, setMemes] = useState([])
     const [generatedMemes, setGeneratedMemes] = useState([])
     const [memeIndex, setMemeIndex] = useState(0);
-    const [captions, setCaptions] = useState([]); // for adding a new caption 
-    //Grab All Memes, display Random meme on start, set to an array
+    const [captions, setCaptions] = useState([]);
+
     useEffect(() => {
         fetch("https://api.imgflip.com/get_memes").then(res => res.json()).then(res => {
             const memes = res.data.memes;
@@ -26,23 +26,21 @@ const MemeGenerator = () => {
             prevGeneratedMemes => prevGeneratedMemes.filter((meme => meme.page_url !== id))
         )
     }
-    // id => id of picture/image
-    // memeId => template Id of the template from the api 
+
     const editMeme = (id, memeId, captionsArr) => {
-        // const currentMeme = memes[memeIndex];
         const editData = new FormData();
         editData.append('username', 'VschoolTesting');
         editData.append('password', 'Testing1');
         editData.append('template_id', memeId);
         captionsArr.forEach((c, index) => editData.append(`boxes[${index}][text]`, c));
-        // console.log(captions)
+
         fetch('https://api.imgflip.com/caption_image', {
             method: 'POST',
             body: editData
         })
             .then(res => {
                 res.json().then(res => {
-                    // console.log(res, 'coming from edit meme')
+
                     console.log(res.data, 'res.data: coming from edit meme')
                     setGeneratedMemes(
                         prevGeneratedMemes => prevGeneratedMemes.map((meme, index) => {
@@ -57,13 +55,9 @@ const MemeGenerator = () => {
                                 console.log("else statemeent~!!")
                                 return meme
                             }
-                            // return meme.id === id ? { ...res.data, memeId: memeId, captions, box_count: meme.box_count } : meme
                         })
                     )
                 });
-                // setGeneratedMemes(
-                //     prevGeneratedMemes => prevGeneratedMemes.map((meme => meme.page_url === id ? edits : meme { ...res.data, memeId: currentMeme.id, captions }))
-                // )
                 setCaptions(Array(memes[memeIndex].box_count).fill(''));
             });
     }
@@ -99,17 +93,7 @@ const MemeGenerator = () => {
     }, [memeIndex, memes]);
     const updateCaption = (e, index) => {
         console.log("Current value: ", e.target.value)
-        const text = e.target.value || '';
         const { value } = e.target
-        // setCaptions(
-        //     captions.map((box_count, i) => {
-        //         if (index === i) {
-        //             return text;
-        //         } else {
-        //             return box_count;
-        //         }
-        //     })
-        // );
         setCaptions(prevCaptions => {
             return prevCaptions.map((text, i) => {
                 if (index === i)
@@ -118,7 +102,6 @@ const MemeGenerator = () => {
                     return text
             })
         })
-        // console.log(captions)
     };
     const UserMemes = generatedMemes.map((meme, index) =>
         <Meme
@@ -137,8 +120,8 @@ const MemeGenerator = () => {
     return (
         memes.length ?
             <div className='container'>
-                <Card>
-                    <h2>React Meme Generator- Create, Read, Update and Delete! </h2>
+                <Card className='memeHeader'>
+                    <h2>Cruddy Meme Generator</h2>
                     <form onSubmit={generateMeme}>
                         <img src={memes[memeIndex].url} alt='meme' />
                         <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
