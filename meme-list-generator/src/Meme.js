@@ -24,30 +24,30 @@ function Meme(props) {
         <>
             <Card>
                 <div className="text-center" >
-                    <div style={{ display: 'block' }}>
+                    <div style={{ display: 'inline-block' }}>
                         <img src={props.url} alt='oops Its Broken' />
-                        <button style={{ backgroundColor: '#fdf0d5', color: '#c1121f' }} onClick={
+                        <button style={{ margin: 'auto', justifyContent: 'center', backgroundColor: '#fdf0d5', color: '#c1121f' }} onClick={
                             () => setShowEdit(prevShowEdit => !prevShowEdit)
                         }>EDIT MEME</button>
-                        <button style={{ backgroundColor: '#c1121f', color: '#fdf0d5' }} onClick={() => props.handleDelete(props.rId)} >DELETE THIS MEME</button>
+                        <button style={{ margin: 'auto', backgroundColor: '#c1121f', color: '#fdf0d5' }} onClick={() => props.handleDelete(props.rId)} >DELETE THIS MEME</button>
+                        {showEdit &&
+                            <form>
+                                {
+                                    captions.map((c, index) => (
+                                        <input className='renderInputs' value={c} onChange={(e) => updateCaption(e, index)} key={index}
+                                        />
+                                    ))
+                                }
+                                <button style={{ backgroundColor: '#e76f51', color: '#fefae0' }} onClick={(e) => {
+                                    e.preventDefault()
+                                    props.handleEdit(props.id, props.memeId, captions)
+                                }
+
+
+                                }>Submit Changes</button>
+                            </form>
+                        }
                     </div>
-                    {showEdit &&
-                        <form>
-                            {
-                                captions.map((c, index) => (
-                                    <input value={c} onChange={(e) => updateCaption(e, index)} key={index}
-                                    />
-                                ))
-                            }
-                            <button style={{ backgroundColor: '#e76f51', color: '#fefae0' }} onClick={(e) => {
-                                e.preventDefault()
-                                props.handleEdit(props.id, props.memeId, captions)
-                            }
-
-
-                            }>Submit Changes</button>
-                        </form>
-                    }
                 </div>
             </Card>
         </>

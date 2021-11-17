@@ -40,23 +40,28 @@ const MemeGenerator = () => {
         })
             .then(res => {
                 res.json().then(res => {
+                    if (res.error_message) {
+                        alert(res.error_message, + 'please complete the inputs before submitting')
 
-                    console.log(res.data, 'res.data: coming from edit meme')
-                    setGeneratedMemes(
-                        prevGeneratedMemes => prevGeneratedMemes.map((meme, index) => {
-                            console.log("current meme in map: ", meme)
-                            if (index === id) {
+                    } else {
 
-                                console.log("hey this needs to be replaced")
-                                console.log(res.data)
-                                return { ...res.data, memeId: memeId, captions, box_count: meme.box_count }
-                            }
-                            else {
-                                console.log("else statemeent~!!")
-                                return meme
-                            }
-                        })
-                    )
+
+                        console.log(res.error_message, 'res.data: coming from edit meme')
+                        setGeneratedMemes(
+                            prevGeneratedMemes => prevGeneratedMemes.map((meme, index) => {
+                                console.log("current meme in map: ", meme)
+                                if (index === id) {
+
+                                    console.log("hey this needs to be replaced")
+                                    console.log(res.data)
+                                    return { ...res.data, memeId: memeId, captions, box_count: meme.box_count }
+                                }
+                                else {
+                                    return meme
+                                }
+                            })
+                        )
+                    }
                 });
                 setCaptions(Array(memes[memeIndex].box_count).fill(''));
             });
@@ -120,8 +125,8 @@ const MemeGenerator = () => {
     return (
         memes.length ?
             <div className='container'>
+                <h2>Cruddy Meme Generator</h2>
                 <Card className='memeHeader'>
-                    <h2>Cruddy Meme Generator</h2>
                     <form onSubmit={generateMeme}>
                         <img src={memes[memeIndex].url} alt='meme' />
                         <button onClick={() => setMemeIndex(memeIndex + 1)} className='skipButton'>Refresh</button>
@@ -134,14 +139,14 @@ const MemeGenerator = () => {
                         <button className='generateButton'>Generate</button>
                     </form>
                 </Card>
-                <Card>
-                    <div className='previewMeme'>
+                <div className='previewMeme'>
+                    <Card>
                         <h2 style={{ textAlign: 'center', color: '#FDF0D5' }}>User Generated Memes</h2>
                         {
                             UserMemes
                         }
-                    </div>
-                </Card >
+                    </Card >
+                </div>
             </div> :
             <>
                 <h2>Memes Will be shown here!</h2>
